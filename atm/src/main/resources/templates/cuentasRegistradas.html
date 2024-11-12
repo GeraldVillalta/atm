@@ -32,14 +32,17 @@
   <tr>
     <th>Número de cuenta</th>
     <th>Estatus de la cuenta</th>
+    <th>saldo</th>
     <th>Nombre</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="cuenta : ${cuentas}">
     <td th:text="${cuenta.numeroCuenta}"></td>
-    <td th:text="${cuenta.estatusCuenta}"></td>
-    <td th:text="${cuenta.nombre}"></td>
+    <td th:text="${cuenta.activa}"></td>
+    <td th:text="${cuenta.saldo}"></td>
+    <td th:text="${cuenta.cliente.nombreCompleto}"></td>
+
   </tr>
   </tbody>
 </table>

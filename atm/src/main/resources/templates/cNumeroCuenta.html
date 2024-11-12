@@ -63,18 +63,15 @@
 <body>
 <div class="form-container">
     <h2>Datos del Cliente</h2>
-    <label for="idCliente">Ingrese la identificación del cliente:</label>
-    <input type="text" id="idCliente" placeholder="ID del cliente" required>
-    <button id="btnMostrarDatos">Mostrar Datos</button>
-    <div id="datosCliente" class="message"></div>
+    <form method="post" th:action="@{/cuenta/consultarNumeroCuenta}" th:object="${cuenta}">
+        <label for="idCliente" >Ingrese la identificación del cliente:</label>
+        <input type="text" id="idCliente" placeholder="ID del cliente" required th:field="*{numeroCuenta}">
+        <button id="btnMostrarDatos">Mostrar Datos</button>
+    </form>
+
+    <span th:text="${numeroCuenta}"></span>
 </div>
 
-<script>
-    document.getElementById('btnMostrarDatos').addEventListener('click', function() {
-        const idCliente = document.getElementById('idCliente').value;
-        const mensaje = `Los datos registrados para este cliente son:\nNombre completo: ...\nIdentificación: ${idCliente}\nNúmero de teléfono: 486464\nDirección de correo electrónico: val@gmail.com\n\nLas cuentas a nombre del cliente ... son:\nNúmero de cuenta: ACC1, Saldo actual: 10000.00 CRC`;
-        document.getElementById('datosCliente').textContent = mensaje;
-    });
-</script>
+
 </body>
 </html>

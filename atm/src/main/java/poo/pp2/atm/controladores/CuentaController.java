@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import poo.pp2.atm.dto.*;
+import poo.pp2.atm.integracion.EmailEnvio;
+import poo.pp2.atm.model.Cliente;
 import poo.pp2.atm.model.Cuenta;
+
+import java.util.List;
 
 
 @Controller
@@ -15,6 +19,8 @@ import poo.pp2.atm.model.Cuenta;
 public class CuentaController {
     Cuenta cuenta;
     CuentaDto cuentaDto;
+    int cantidadIngresadaPin = 0;
+    String pin;
 
 
     @GetMapping("/crear")
@@ -25,9 +31,10 @@ public class CuentaController {
     }
     @PostMapping("/crear")
     public String crearCuenta(@ModelAttribute("cuenta") CuentaDto cuentaDto) {
-        cuenta = new Cuenta(cuentaDto.getNumeroCuenta(), cuentaDto.getSaldo(), cuentaDto.getPin());
+        Cliente cliente = Cliente.buscarClientePorIdentificacion(cuentaDto.getNumeroCuenta());
+
         System.out.println(cuentaDto.getNumeroCuenta());
-        Cuenta.crearCuenta(cuentaDto.getNumeroCuenta(), cuentaDto.getSaldo(), cuentaDto.getPin());
+        cuenta = Cuenta.crearCuenta(cuentaDto.getNumeroCuenta(), cuentaDto.getSaldo(), cuentaDto.getPin(), cliente);
         System.out.println("ESTADO DE CUENTA"+cuenta.consultarEstadoCuenta());
         return "/menu";
     }
@@ -43,16 +50,32 @@ public class CuentaController {
     @PostMapping("/consultarSaldoActual")
     public String consultarSaldoActual(@ModelAttribute("cuenta") ConsultaCuentaDto consultaCuentaDto, Model model) {
         Cuenta cuenta = Cuenta.consultarCuenta(consultaCuentaDto.getNumeroCuenta());
+        Cliente cliente = cuenta.getCliente();
+        String validacion = validarPin(consultaCuentaDto,cuenta);
+        System.out.println("PINDTO"+ consultaCuentaDto.getPin());
+        System.out.println("PINCuenta"+ cuenta.getPin().toString());
+        System.out.println("VALIDA"+validacion);
 
-        Double saldoActual = cuenta.getSaldo();  // Aquí deberías obtener el saldo de la cuenta registrada
-        System.out.println(saldoActual);
-        if (saldoActual != null) {
-            model.addAttribute("saldoActual", saldoActual);
-        } else {
-            model.addAttribute("error", "Saldo no disponible.");
+        if(validacion.equals("true") && cuenta.isActiva()){
+            Double saldoActual = cuenta.getSaldo();  // Aquí deberías obtener el saldo de la cuenta registrada
+            System.out.println(saldoActual);
+            if (saldoActual != null) {
+                model.addAttribute("saldoActual", saldoActual);
+            } else {
+                model.addAttribute("error", "Saldo no disponible.");
+            }
+
+            return "consultarSaldoAct";
         }
+        else if(validacion.equals("bloquear") ){
+            cuenta.bloquearCuenta();
+            EmailEnvio.enviarCorreo(cliente.getCorreoElectronico());
+            return "menu";
+        }
+        model.addAttribute("ruta", "consultarSaldoActual");
+        return "errorValidacion";
 
-        return "consultarSaldoAct";
+
     }
 
     @GetMapping("/consultarSaldoActualUSD")
@@ -66,16 +89,26 @@ public class CuentaController {
     @PostMapping("/consultarSaldoActualUSD")
     public String consultarSaldoActualUSD(@ModelAttribute("cuenta") ConsultaCuentaDto consultaCuentaDto, Model model) {
         Cuenta cuenta = Cuenta.consultarCuenta(consultaCuentaDto.getNumeroCuenta());
+        Cliente cliente = cuenta.getCliente();
+        String validacion = validarPin(consultaCuentaDto,cuenta);
+        if(validacion.equals("true") && cuenta.isActiva()){
+            Double saldoActual = cuenta.saldoEnDolares();  // Aquí deberías obtener el saldo de la cuenta registrada
+            System.out.println(saldoActual);
+            if (saldoActual != null) {
+                model.addAttribute("saldoActual", saldoActual);
+            } else {
+                model.addAttribute("error", "Saldo no disponible.");
+            }
 
-        Double saldoActual = cuenta.saldoEnDolares();  // Aquí deberías obtener el saldo de la cuenta registrada
-        System.out.println(saldoActual);
-        if (saldoActual != null) {
-            model.addAttribute("saldoActual", saldoActual);
-        } else {
-            model.addAttribute("error", "Saldo no disponible.");
+            return "consultarSaldoActUSD";
         }
-
-        return "consultarSaldoActUSD";
+        else if(validacion.equals("bloquear") ){
+            cuenta.bloquearCuenta();
+            EmailEnvio.enviarCorreo(cliente.getCorreoElectronico());
+            return "menu";
+        }
+        model.addAttribute("ruta", "consultarSaldoActual");
+        return "errorValidacion";
     }
     @GetMapping("/consultarEstadoC")
     public String consultarEstadoC(Model model) {
@@ -180,15 +213,31 @@ public class CuentaController {
 
 
     @GetMapping("/consultarNumeroCuenta")
-    public String consultarNumeroCuenta() {
+    public String consultarNumeroCuenta(Model model) {
+        ConsultaEstadoDto consultaEstadoDto = new ConsultaEstadoDto();
+        model.addAttribute("cuenta", consultaEstadoDto);
+        return "cNumeroCuenta";
+    }
+
+    @PostMapping("/consultarNumeroCuenta")
+    public String consultarNumeroCuenta(@ModelAttribute("cuenta") ConsultaEstadoDto consultaEstadoDto, Model model) {
+        Cuenta cuenta = Cuenta.consultarCuenta(consultaEstadoDto.getNumeroCuenta());
+        String numeroCuenta = cuenta.getNumeroCuenta();
+        model.addAttribute("numeroCuenta", numeroCuenta);
+
         return "cNumeroCuenta";
     }
 
 
-    @GetMapping("/consultarEstadoCUSD")
-    public String consultarEstadoCUSD() {
-        return "consultarEstadoCUSD";
+    @GetMapping("/cuentasRegistradas")
+    public String cuentasRegistradas(Model model) {
+        List cuentas = Cuenta.obtenerCuentas();
+
+        model.addAttribute("cuentas", cuentas);
+        return "cuentasRegistradas";
     }
+
+
 
 
 
@@ -235,9 +284,25 @@ public class CuentaController {
         return "consultarTransacciones";
     }
 
-    @GetMapping("/cuentasRegistradas")
-    public String cuentasRegistradas() {
-        return "cuentasRegistradas";
+
+
+
+
+    public String validarPin(ConsultaCuentaDto consultaCuentaDto, Cuenta cuenta){
+        String pinIngresado = consultaCuentaDto.getPin();
+        if (cuenta.validarPin(pinIngresado)) {
+            return "true";
+        }
+        else{
+            cantidadIngresadaPin++;
+        }
+
+        if (cantidadIngresadaPin>3){
+            return "bloquear";
+        }
+        return "false";
+
+
     }
 }
 

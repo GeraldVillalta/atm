@@ -14,6 +14,7 @@ import poo.pp2.atm.model.Cuenta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/client")
@@ -108,6 +109,8 @@ public class ClientController {
         model.addAttribute("clientes", clientes);
         return "clientesRegistrados";
     }
+
+
 
 
 }
