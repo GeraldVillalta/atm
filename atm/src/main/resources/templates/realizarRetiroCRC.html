@@ -1,0 +1,137 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Retiro de Dinero</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .form-container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 400px;  
+        }  
+        h2 {  
+            text-align: center;  
+            color: #2196F3;  
+            margin-bottom: 20px;  
+        }  
+        label {  
+            display: block;  
+            margin-bottom: 5px;  
+            margin-top: 10px;  
+        }  
+        input {  
+            width: 100%;  
+            padding: 10px;  
+            margin-bottom: 15px;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+            font-size: 14px;  
+        }  
+        button {  
+            width: 100%;  
+            padding: 10px;  
+            background-color: #2196F3;  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #1976D2;  
+        }  
+        .message {  
+            margin-top: 15px;  
+            color: #333;  
+            font-size: 14px;  
+            white-space: pre-line; /* Para mantener saltos de línea */  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="form-container">  
+        <h2>Retiro de Dinero</h2>  
+        <!-- Primer paso: info de cuenta -->  
+        <div id="step1">  
+            <label for="nroCuenta">Número de cuenta:</label>  
+            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required>  
+            
+            <label for="pinActual">PIN actual:</label>  
+            <input type="password" id="pinActual" placeholder="Ingrese PIN" required>  
+            
+            <button id="btnAceptar">Aceptar</button>  
+            <div id="resultado" class="message"></div>  
+        </div>  
+
+        <!-- Segundo paso: entrada de palabra -->  
+        <div id="step2" style="display:none;">  
+            <label for="palabraRecibida">Ingrese la palabra recibida por mensaje de texto:</label>  
+            <input type="text" id="palabraRecibida" placeholder="Ingrese la palabra" required>  
+            
+            <button id="btnConfirmarPalabra">Aceptar</button>  
+            <div id="resultadoPalabra" class="message"></div>  
+        </div>  
+
+        <!-- Tercer paso: ingreso del monto de retiro -->  
+        <div id="step3" style="display:none;">  
+            <label for="montoRetiro">Monto de retiro:</label>  
+            <input type="number" id="montoRetiro" placeholder="Ingrese monto de retiro" required>  
+            
+            <button id="btnRetirar">Retirar</button>  
+            <div id="resultadoRetiro" class="message"></div>  
+        </div>  
+
+        <!-- Mensaje final -->  
+        <div id="mensajeFinal" style="display:none;">  
+            <div class="message" id="resultadoFinal"></div>  
+        </div>  
+    </div>  
+
+    <script>  
+        const nombreCompleto = "...";  
+        const comision = 1000.00; 
+        document.getElementById('btnAceptar').addEventListener('click', function() {  
+            const nroCuenta = document.getElementById('nroCuenta').value;  
+            const pinActual = document.getElementById('pinActual').value;  
+
+            // Aquí se agrega la lógica de verificación de cuenta y PIN  
+            document.getElementById('step1').style.display = 'none';  
+            document.getElementById('step2').style.display = 'block';  
+            document.getElementById('resultado').textContent = `Número de cuenta ${nroCuenta} validado.`;  
+        });  
+
+        document.getElementById('btnConfirmarPalabra').addEventListener('click', function() {  
+            const palabraRecibida = document.getElementById('palabraRecibida').value;  
+
+            // Aquí se agrega la lógica para verificar la palabra.  
+            document.getElementById('step2').style.display = 'none';  
+            document.getElementById('step3').style.display = 'block';  
+            document.getElementById('resultadoPalabra').textContent = `Palabra ingresada: ${palabraRecibida}. Puede continuar.`;  
+        });  
+
+        document.getElementById('btnRetirar').addEventListener('click', function() {  
+            const montoRetiro = parseFloat(document.getElementById('montoRetiro').value);  
+
+            // Aquí puedes agregar lógica para procesar el retiro.  
+            // Simplemente informamos al usuario que el retiro fue exitoso.  
+            document.getElementById('step3').style.display = 'none';  
+            document.getElementById('mensajeFinal').style.display = 'block';  
+
+            const mensajeFinal = `Estimado usuario: ${nombreCompleto}, el monto de este retiro de su cuenta CTAX es ${montoRetiro.toFixed(2)} colones. Por favor tome el dinero dispensado.\n El monto cobrado por concepto de comisión fue de ${comision.toFixed(2)} colones, que fueron rebajados automáticamente de su saldo actual.`;  
+            document.getElementById('resultadoFinal').textContent = mensajeFinal;  
+        });  
+    </script>  
+</body>  
+</html>

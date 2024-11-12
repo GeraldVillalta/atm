@@ -1,0 +1,87 @@
+<!DOCTYPE html>  
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Menú GUI</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            display: flex;  
+            flex-direction: column;  
+            align-items: center;  
+            justify-content: center;  
+            margin: 20px;  
+        }  
+        .menu {  
+            display: grid;  
+            grid-template-columns: repeat(2, 1fr);  
+            gap: 10px;  
+            width: 80%;  
+        }  
+        a {
+            background-color: #a1c1e7;  
+            border: none;  
+            color: white;  
+            padding: 10px;  
+            text-align: center;  
+            text-decoration: none;  
+            display: inline-block;  
+            font-size: 16px;  
+            cursor: pointer;  
+            border-radius: 5px;  
+            transition: background-color 0.3s;  
+        }  
+        a:hover {
+            background-color: #8a9cc9;  
+        }  
+        .salir {  
+            grid-column: span 2;  
+            background-color: #f44336;  
+        }  
+    </style>  
+</head>  
+<body>  
+
+<h1>Gestión de cuentas</h1>  
+<div class="menu">  
+    <a id="createClientButton" th:href="@{/client/crear}"> Crear Cliente</a>
+    <a id="createClientJuridicoButton" th:href="@{/client/crearJ}"> Crear Cliente Jurídico</a>
+
+    <a id="tipoCambioVentaButton" th:href="@{/tipoCambio/venta}">Consultar Tipo de Cambio Venta</a>
+    <a id="createAccountButton"  th:href="@{/cuenta/crear}" >Crear Cuenta</a>
+
+    <a id="consultSaldoButton"  th:href="@{/cuenta/consultarSaldoActual}" >Consultar Saldo Actual</a>
+    <a id="changePinButton" th:href="@{/cuenta/cambiarPin}" >Cambiar PIN</a>
+
+    <a id="consultSaldoUSDButton" th:href="@{/cuenta/consultarSaldoActualUSD}" > Consultar Saldo Actual (USD)</a>
+    <a id="depositoCRCButton" th:href="@{/cuenta/depositoCRC}">Realizar Depósito (CRC)</a>
+
+    <a id="estadoCuentaButton" th:href="@{/cuenta/consultarEstadoC}">Consultar Estado de Cuenta</a>
+    <a id="depositoUSDButton" th:href="@{/cuenta/depositoUSD}">Realizar Depósito (USD)</a>
+
+    <a id="estadoCuentaUSDButton" th:href="@{/cuenta/consultarEstadoCUSD}">Consultar Estado de Cuenta (USD)</a>
+    <a id="retiroCRCButton" th:href="@{/cuenta/retiroCRC}">Realizar Retiro (CRC)</a>
+
+    <a id="updatePhoneButton" th:href="@{/client/actualizarTelefono}">Actualizar Teléfono</a>
+    <a id="retiroUSDButton" th:href="@{/cuenta/retiroUSD}">Realizar Retiro (USD)</a>
+
+    <a id="updateEmailButton" th:href="@{/client/actualizarEmail}">Actualizar Email</a>
+    <a id="transferButton" th:href="@{/cuenta/realizarTransferencia}">Realizar Transferencia</a>
+
+    <a id="estadoCuentaGeneralButton" th:href="@{/cuenta/consultarEstadoC}">Consultar Estado de Cuenta</a>
+    <a id="consultTransaccionesButton" th:href="@{/cuenta/consultarTransacciones}">Consultar Transacciones</a>
+
+    <a id="consultCuentasClienteButton" th:href="@{/cuenta/consultarNumeroCuenta}">Consultar # de cuenta de Cliente</a>
+    <a id="tipoCambioCompraButton" th:href="@{/tipoCambio/compra}">Consultar Tipo de Cambio Compra</a>
+
+    <a id="deleteAccountButton">Eliminar Cuenta de Cliente</a>
+    <a class="salir" id="exitButton">Salir</a>
+</div>  
+
+
+
+
+
+</body>  
+</html>

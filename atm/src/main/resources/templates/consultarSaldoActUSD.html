@@ -1,0 +1,98 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Consulta de Saldo en USD</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 400px;  
+            text-align: center;  
+        }  
+        h2 {  
+            color: #2196F3; /* Azul para el título */  
+            margin-bottom: 20px;  
+        }  
+        input[type="text"], input[type="password"] {  
+            width: calc(100% - 20px);  
+            padding: 10px;  
+            margin: 10px 0;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+        }  
+        button {  
+            padding: 10px 20px;  
+            background-color: #2196F3; /* Azul para el botón */  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #1976D2; /* Color más oscuro al pasar el ratón */  
+        }  
+        .mensaje {  
+            margin-top: 20px;  
+            color: #333;  
+            font-weight: bold;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container">  
+        <h2>Consulta de Saldo en USD</h2>  
+        <input type="text" id="numeroCuenta" placeholder="Número de Cuenta" />  
+        <input type="password" id="pinCuenta" placeholder="PIN de la Cuenta" />  
+        <button id="btnConsultar">Consultar Saldo</button>  
+        <div class="mensaje" id="mensajeSaldo"></div>  
+    </div>  
+
+    <script>  
+        // Datos de ejemplo (en un entorno real, estos provendrían de una base de datos)  
+        const cuentas = {  
+            '123456789': {  
+                pin: '1234',  
+                nombre: 'Juan Pérez',  
+                saldoUSD: 1250.75  
+            },  
+            '987654321': {  
+                pin: '5678',  
+                nombre: 'Ana Gómez',  
+                saldoUSD: 850.25  
+            }  
+        };  
+
+        // Función para consultar el saldo en USD  
+        function consultarSaldo() {  
+            const numeroCuenta = document.getElementById('numeroCuenta').value;  
+            const pinCuenta = document.getElementById('pinCuenta').value;  
+            const mensajeSaldo = document.getElementById('mensajeSaldo');  
+
+            if (cuentas[numeroCuenta] && cuentas[numeroCuenta].pin === pinCuenta) {  
+                const nombre = cuentas[numeroCuenta].nombre;  
+                const saldo = cuentas[numeroCuenta].saldoUSD.toFixed(2);  
+                mensajeSaldo.innerHTML = `Estimado usuario: ${nombre}, el saldo actual de su cuenta CTAX es de $${saldo} USD.`;  
+            } else {  
+                mensajeSaldo.innerHTML = 'Número de cuenta o PIN incorrectos. Intente de nuevo.';  
+            }  
+        }  
+
+        // Evento de consulta al hacer clic en el botón  
+        document.getElementById('btnConsultar').addEventListener('click', consultarSaldo);  
+    </script>  
+</body>  
+</html>

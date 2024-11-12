@@ -1,0 +1,94 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Actualizar Correo Electrónico</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 400px;  
+            text-align: center;  
+        }  
+        h2 {  
+            color: #FF9800; /* Naranja para el título */  
+            margin-bottom: 20px;  
+        }  
+        input[type="text"], input[type="email"] {  
+            width: calc(100% - 20px);  
+            padding: 10px;  
+            margin: 10px 0;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+        }  
+        button {  
+            padding: 10px 20px;  
+            background-color: #FF9800; /* Naranja para el botón */  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #F57C00; /* Color más oscuro al pasar el ratón */  
+        }  
+        .mensaje {  
+            margin-top: 20px;  
+            color: #333;  
+            font-weight: bold;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container">  
+        <h2>Actualizar Correo Electrónico</h2>  
+        <input type="text" id="idCliente" placeholder="Identificación del Cliente" />  
+        <input type="email" id="nuevoCorreo" placeholder="Nuevo Correo Electrónico" />  
+        <button id="btnActualizar">Actualizar Correo</button>  
+        <div class="mensaje" id="mensajeEstado"></div>  
+    </div>  
+
+    <script>  
+        // Datos de ejemplo 
+        const clientes = {  
+            '001': { nombre: 'Juan Pérez', correo: 'juan.perez@example.com' },  
+        };  
+
+        // Función para actualizar el correo electrónico  
+        function actualizarCorreo() {  
+            const idCliente = document.getElementById('idCliente').value;  
+            const nuevoCorreo = document.getElementById('nuevoCorreo').value;  
+            const mensajeEstado = document.getElementById('mensajeEstado');  
+
+            if (clientes[idCliente]) {  
+                const cliente = clientes[idCliente];  
+                const correoAnterior = cliente.correo;  
+                cliente.correo = nuevoCorreo; // Actualiza el correo  
+
+                mensajeEstado.innerHTML = `  
+                    Estimado usuario: ${cliente.nombre}, usted ha cambiado el   
+                    correo electrónico ${correoAnterior} por el nuevo correo ${nuevoCorreo}.  
+                `;  
+            } else {  
+                mensajeEstado.innerHTML = 'Identificación del cliente incorrecta. Intente de nuevo.';  
+            }  
+        }  
+
+        // Evento de actualización al hacer clic en el botón  
+        document.getElementById('btnActualizar').addEventListener('click', actualizarCorreo);  
+    </script>  
+</body>  
+</html>

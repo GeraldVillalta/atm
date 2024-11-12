@@ -1,0 +1,114 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Crear Cliente Físico</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .form-container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 300px;  
+        }  
+        h2 {  
+            text-align: center;  
+            color: #6a1b9a; /* Un color morado */  
+        }  
+        label {  
+            display: block;  
+            margin-bottom: 5px;  
+            margin-top: 10px;  
+        }  
+        input, select {  
+            width: 100%;  
+            padding: 8px;  
+            margin-bottom: 10px;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+        }  
+        button {  
+            width: 100%;  
+            padding: 10px;  
+            background-color: #6a1b9a; /* Un color morado */  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+        }  
+        button:hover {  
+            background-color: #4a148c; /* Un tono morado más oscuro */  
+        }  
+        .mensaje {  
+            margin-top: 20px;  
+            color: #333;  
+            font-weight: bold;  
+            text-align: center;  
+        }  
+    </style>  
+</head>
+    <div class="form-container">
+        <h2>Crear Cliente Físico</h2>
+
+        <form method="post" th:action="@{/client/crear}" th:object="${cliente}">
+            <div class="form-group">
+                <label for="nombreCompleto">Nombre Completo</label>
+                <input type="text" th:field="*{nombreCompleto}" id="nombreCompleto" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría</label>
+                <select th:field="*{categoria}" id="categoria" class="form-control" required>
+                    <option value="individual">Individual</option>
+                    <option value="empresa">Empresa</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="numeroTelefono">Número de Teléfono</label>
+                <input type="tel" th:field="*{numeroTelefono}" id="numeroTelefono" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="correoElectronico">Correo Electrónico</label>
+                <input type="email" th:field="*{correoElectronico}" id="correoElectronico" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="identificacion">Identificación</label>
+                <input type="text" th:field="*{identificacion}" id="identificacion" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="maximoCuentas">Máxima Cantidad de Cuentas</label>
+                <input type="number" th:field="*{maximoCuentas}" id="maximoCuentas" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                <input type="date" th:field="*{fechaNacimiento}" id="fechaNacimiento" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Crear Cliente</button>
+        </form>
+
+
+
+
+        <div class="mensaje" id="mensajeEstado"></div>
+    </div>
+
+
+
+</body>  
+</html>

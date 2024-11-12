@@ -1,0 +1,100 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Depósito de Dólares</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .form-container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 400px;  
+        }  
+        h2 {  
+            text-align: center;  
+            color: #6a1b9a;  
+            margin-bottom: 20px;  
+        }  
+        label {  
+            display: block;  
+            margin-bottom: 5px;  
+            margin-top: 10px;  
+        }  
+        input {  
+            width: 100%;  
+            padding: 10px;  
+            margin-bottom: 15px;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+            font-size: 14px;  
+        }  
+        button {  
+            width: 100%;  
+            padding: 10px;  
+            background-color: #6a1b9a;  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #4a148c;  
+        }  
+        .message {  
+            margin-top: 15px;  
+            color: #333;  
+            font-size: 14px;  
+            white-space: pre-line; /* Para mantener saltos de línea */  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="form-container">  
+        <h2>Depósito en Dólares</h2>  
+        <label for="nroCuenta">Número de cuenta:</label>  
+        <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required>  
+        
+        <label for="montoDeposito">Monto del depósito en dólares:</label>  
+        <input type="number" id="montoDeposito" placeholder="Ingrese monto de depósito" required>  
+        
+        <button id="btnDepositar">Realizar Depósito</button>  
+        <div id="resultado" class="message"></div>  
+    </div>  
+    
+    <script>  
+        // Datos ficticios  
+        const nombreCompleto = "..."; // Cambiar según sea necesario  
+        const tipoCambio = 620.50; // Ejemplo de tipo de cambio  
+        const comision = 500.00; // Valor ficticio de la comisión  
+        const fecha = new Date().toLocaleDateString('es-CR'); // Fecha actual en formato CR  
+
+        document.getElementById('btnDepositar').addEventListener('click', function() {  
+            const nroCuenta = document.getElementById('nroCuenta').value;  
+            const montoDeposito = parseFloat(document.getElementById('montoDeposito').value);  
+
+            // Cálculos  
+            const montoColones = montoDeposito * tipoCambio; // Monto en colones  
+            const montoRealDeposito = montoColones - comision; // Monto real después de la comisión  
+
+            const mensaje = `Estimado usuario: ${nombreCompleto}, se han recibido correctamente ${montoDeposito.toFixed(2)} dólares.\n` +  
+                            `Según el BCCR, el tipo de cambio de compra del dólar de hoy ${fecha} es: ${tipoCambio.toFixed(2)}\n` +  
+                            `El monto equivalente en colones es ${montoColones.toFixed(2)}\n` +  
+                            `El monto real depositado a su cuenta ${nroCuenta} es de ${montoRealDeposito.toFixed(2)} colones\n` +  
+                            `El monto cobrado por concepto de comisión fue de ${comision.toFixed(2)} colones, que fueron rebajados automáticamente de su saldo actual`;  
+            document.getElementById('resultado').textContent = mensaje;  
+        });  
+    </script>  
+</body>  
+</html>

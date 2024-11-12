@@ -1,0 +1,79 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Estado de Cuenta</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .form-container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 300px;  
+        }  
+        h2 {  
+            text-align: center;  
+            color: #6a1b9a;  
+            margin-bottom: 20px;  
+        }  
+        label {  
+            display: block;  
+            margin-bottom: 5px;  
+            margin-top: 10px;  
+        }  
+        input {  
+            width: 100%;  
+            padding: 10px;  
+            margin-bottom: 15px;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+            font-size: 14px;  
+        }  
+        button {  
+            width: 100%;  
+            padding: 10px;  
+            background-color: #6a1b9a;  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #4a148c;  
+        }  
+        .message {  
+            margin-top: 15px;  
+            color: #333;  
+            font-size: 14px;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="form-container">  
+        <h2>Estado de Cuenta</h2>  
+        <label for="nroCuenta">Ingrese el número de cuenta:</label>  
+        <input type="text" id="nroCuenta" placeholder="ACC1" required>  
+        <button id="btnMostrarEstado">Mostrar Estado</button>  
+        <div id="estadoCuenta" class="message"></div>  
+    </div>  
+    
+    <script>  
+        document.getElementById('btnMostrarEstado').addEventListener('click', function() {  
+            const nroCuenta = document.getElementById('nroCuenta').value;  
+            const mensaje = `La cuenta ${nroCuenta}, a nombre de ... tiene estado de ...`;  
+            document.getElementById('estadoCuenta').textContent = mensaje;  
+        });  
+    </script>  
+</body>  
+</html>

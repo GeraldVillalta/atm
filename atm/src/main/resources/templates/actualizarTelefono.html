@@ -1,0 +1,95 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Actualizar Número de Teléfono</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 400px;  
+            text-align: center;  
+        }  
+        h2 {  
+            color: #FF9800; /* Naranja para el título */  
+            margin-bottom: 20px;  
+        }  
+        input[type="text"] {  
+            width: calc(100% - 20px);  
+            padding: 10px;  
+            margin: 10px 0;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+        }  
+        button {  
+            padding: 10px 20px;  
+            background-color: #FF9800; /* Naranja para el botón */  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #F57C00; /* Color más oscuro al pasar el ratón */  
+        }  
+        .mensaje {  
+            margin-top: 20px;  
+            color: #333;  
+            font-weight: bold;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container">  
+        <h2>Actualizar Número de Teléfono</h2>  
+        <input type="text" id="idCliente" placeholder="Identificación del Cliente" />  
+        <input type="text" id="nuevoTelefono" placeholder="Nuevo Número de Teléfono" />  
+        <button id="btnActualizar">Actualizar Teléfono</button>  
+        <div class="mensaje" id="mensajeEstado"></div>  
+    </div>  
+
+    <script>  
+        // Datos de ejemplo 
+        const clientes = {  
+            '001': { nombre: 'Juan Pérez', telefono: '123456789' },  
+
+        };  
+
+        // Función para actualizar el número de teléfono  
+        function actualizarTelefono() {  
+            const idCliente = document.getElementById('idCliente').value;  
+            const nuevoTelefono = document.getElementById('nuevoTelefono').value;  
+            const mensajeEstado = document.getElementById('mensajeEstado');  
+
+            if (clientes[idCliente]) {  
+                const cliente = clientes[idCliente];  
+                const telefonoAnterior = cliente.telefono;  
+                cliente.telefono = nuevoTelefono; // Actualiza el teléfono  
+
+                mensajeEstado.innerHTML = `  
+                    Estimado usuario: ${cliente.nombre}, usted ha cambiado el   
+                    número de teléfono ${telefonoAnterior} por el nuevo número ${nuevoTelefono}.  
+                `;  
+            } else {  
+                mensajeEstado.innerHTML = 'Identificación del cliente incorrecta. Intente de nuevo.';  
+            }  
+        }  
+
+        // Evento de actualización al hacer clic en el botón  
+        document.getElementById('btnActualizar').addEventListener('click', actualizarTelefono);  
+    </script>  
+</body>  
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos del Cliente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #6a1b9a;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #6a1b9a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #4a148c;
+        }
+        .message {
+            margin-top: 15px;
+            color: #333;
+            font-size: 14px;
+            white-space: pre-line; /* Para mantener saltos de línea */
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Datos del Cliente</h2>
+    <label for="idCliente">Ingrese la identificación del cliente:</label>
+    <input type="text" id="idCliente" placeholder="ID del cliente" required>
+    <button id="btnMostrarDatos">Mostrar Datos</button>
+    <div id="datosCliente" class="message"></div>
+</div>
+
+<script>
+    document.getElementById('btnMostrarDatos').addEventListener('click', function() {
+        const idCliente = document.getElementById('idCliente').value;
+        const mensaje = `Los datos registrados para este cliente son:\nNombre completo: ...\nIdentificación: ${idCliente}\nNúmero de teléfono: 486464\nDirección de correo electrónico: val@gmail.com\n\nLas cuentas a nombre del cliente ... son:\nNúmero de cuenta: ACC1, Saldo actual: 10000.00 CRC`;
+        document.getElementById('datosCliente').textContent = mensaje;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Consulta de Estado de Cuenta</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+        }  
+        .container {  
+            background-color: #ffffff;  
+            border-radius: 8px;  
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+            width: 400px;  
+            text-align: center;  
+        }  
+        h2 {  
+            color: #FF9800; /* Naranja para el título */  
+            margin-bottom: 20px;  
+        }  
+        input[type="text"], input[type="password"] {  
+            width: calc(100% - 20px);  
+            padding: 10px;  
+            margin: 10px 0;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+        }  
+        button {  
+            padding: 10px 20px;  
+            background-color: #FF9800; /* Naranja para el botón */  
+            color: white;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #F57C00; /* Color más oscuro al pasar el ratón */  
+        }  
+        .mensaje {  
+            margin-top: 20px;  
+            color: #333;  
+            font-weight: bold;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container">  
+        <h2>Consulta de Estado de Cuenta USD</h2>  
+        <input type="text" id="numeroCuenta" placeholder="Número de Cuenta" />  
+        <input type="password" id="pinCuenta" placeholder="PIN de la Cuenta" />  
+        <button id="btnConsultar">Consultar Estado</button>  
+        <div class="mensaje" id="mensajeEstado"></div>  
+    </div>  
+
+    <script>  
+        // Datos de ejemplo (en un entorno real, estos provendrían de una base de datos)  
+        const cuentas = {  
+            '123456789': {  
+                pin: '1234',  
+                nombre: 'Juan Pérez',  
+                saldoUSD: 1250.75,  
+                tipoCuenta: 'Ahorros',  
+                fechaApertura: '2022-01-15',  
+                transacciones: [  
+                    { fecha: '2023-01-10', monto: -50, descripcion: 'Retiro' },  
+                    { fecha: '2023-02-05', monto: 100, descripcion: 'Depósito' },  
+                    { fecha: '2023-03-12', monto: -25, descripcion: 'Retiro' }  
+                ]  
+            },  
+                   
+        };  
+
+        // Tasa de cambio ficticia de USD a EUR  
+        const tasaCambio = 0.85;  
+
+        // Función para consultar el estado de cuenta  
+        function consultarEstadoCuenta() {  
+            const numeroCuenta = document.getElementById('numeroCuenta').value;  
+            const pinCuenta = document.getElementById('pinCuenta').value;  
+            const mensajeEstado = document.getElementById('mensajeEstado');  
+
+            if (cuentas[numeroCuenta] && cuentas[numeroCuenta].pin === pinCuenta) {  
+                const cuenta = cuentas[numeroCuenta];  
+                const saldoEUR = (cuenta.saldoUSD * tasaCambio).toFixed(2);  
+                const transaccionesList = cuenta.transacciones.map(trans =>   
+                    `Fecha: ${trans.fecha}, Monto: €${(trans.monto * tasaCambio).toFixed(2)}, Descripción: ${trans.descripcion}`  
+                ).join('<br>');  
+
+                mensajeEstado.innerHTML = `  
+                    <strong>Nombre:</strong> ${cuenta.nombre}<br>  
+                    <strong>Tipo de Cuenta:</strong> ${cuenta.tipoCuenta}<br>  
+                    <strong>Fecha de Apertura:</strong> ${cuenta.fechaApertura}<br>  
+                    <strong>Saldo Actual:</strong> €${saldoEUR} EUR<br>  
+                    <strong>Transacciones:</strong><br>  
+                    ${transaccionesList || 'No hay transacciones registradas.'}  
+                `;  
+            } else {  
+                mensajeEstado.innerHTML = 'Número de cuenta o PIN incorrectos. Intente de nuevo.';  
+            }  
+        }  
+
+        // Evento de consulta al hacer clic en el botón  
+        document.getElementById('btnConsultar').addEventListener('click', consultarEstadoCuenta);  
+    </script>  
+</body>  
+</html>
