@@ -8,6 +8,6 @@ package poo.pp2.atm.model;
  *
  * @author rache
  */
-public class ClienteJuridico {
+public class ClienteJuridico extends Cliente {
     
 }

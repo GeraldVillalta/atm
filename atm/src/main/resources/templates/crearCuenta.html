@@ -57,19 +57,22 @@
 <body>
     <div class="form-container">
         <h2>Crear Cuenta</h2>
-        <form th:action="@{/cuenta/crear}" method="post" th:object="${cuenta}" >  <!-- Acción de formulario POST -->
-            <label for="identificacion">Identificación:</label>
-            <input type="text" id="identificacion" name="identificacion" placeholder="Ingresa tu identificación" required>
+            <form th:action="@{/cuenta/crear}" method="post" th:object="${cuenta}"> <!-- Acción de formulario POST -->
 
-            <label for="pin">PIN:</label>
-            <input type="password" id="pin" name="pin" placeholder="Ingresa tu PIN" required>
+                <label for="numeroCuenta">Número de Cuenta:</label>
+                <input type="text" id="numeroCuenta" th:field="*{numeroCuenta}" placeholder="Ingresa tu número de cuenta" required>
 
-            <label for="montoDeposito">Monto depósito:</label>
-            <input type="number" id="montoDeposito" name="montoDeposito" placeholder="Ingresa monto" required>
+                <label for="pin">PIN:</label>
+                <input type="password" id="pin" th:field="*{pin}" placeholder="Ingresa tu PIN" required>
 
-            <button type="submit">Crear Cuenta</button>
-        </form>
+                <label for="saldo">Monto depósito:</label>
+                <input type="number" id="saldo" th:field="*{saldo}" placeholder="Ingresa monto" required>
+
+                <button type="submit">Crear Cuenta</button>
+            </form>
     </div>
+
+
 
 
 </body>  

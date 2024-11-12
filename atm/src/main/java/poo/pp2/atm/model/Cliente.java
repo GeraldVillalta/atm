@@ -28,7 +28,7 @@ public class Cliente {
     private int maximoCuentas;
     private LocalDate fechaNacimiento;
     private  HashMap<String, Cuenta> cuentasCliente; // Almacena las cuentas del cliente
-    private static final HashMap<String, Cliente> mapaClientes = new HashMap<>(); // Mapa de todos los clientes
+    protected static final HashMap<String, Cliente> mapaClientes = new HashMap<>(); // Mapa de todos los clientes
 
     // Constructor
     public Cliente(String nombreCompleto, String identificacion, String numeroTelefono, String correoElectronico, String categoria, int maximoCuentas, LocalDate fechaNacimiento) {

@@ -54,41 +54,17 @@
 </head>  
 <body>  
     <div class="container">  
-        <h2>Consulta de Saldo</h2>  
-        <input type="text" id="numeroCuenta" placeholder="Número de Cuenta" />  
-        <input type="password" id="pinCuenta" placeholder="PIN de la Cuenta" />  
-        <button id="btnConsultar">Consultar Saldo</button>  
-        <div class="mensaje" id="mensajeSaldo"></div>  
-    </div>  
+        <h2>Consulta de Saldo</h2>
+        <form method="post" th:action="@{/cuenta/consultarSaldoActual}" th:object="${cuenta}">
+            <input type="text" id="numeroCuenta" placeholder="Número de Cuenta" th:field="*{numeroCuenta}" />
+            <input type="password" id="pinCuenta" placeholder="PIN de la Cuenta"  th:field="*{pin}"/>
+            <button id="btnConsultar">Consultar Saldo</button>
 
-    <script>  
-        // Datos de ejemplo (en un entorno real, estos provendrían de una base de datos)  
-        const cuentas = {  
-            '123456789': {  
-                pin: '1234',  
-                nombre: 'juan ',  
-                saldo: 2500.50  
-            },  
-  
-        };  
+        </form>
+        <span th:text="${saldoActual != null} ? ${saldoActual}"></span>
 
-        // Función para consultar el saldo  
-        function consultarSaldo() {  
-            const numeroCuenta = document.getElementById('numeroCuenta').value;  
-            const pinCuenta = document.getElementById('pinCuenta').value;  
-            const mensajeSaldo = document.getElementById('mensajeSaldo');  
+    </div>
 
-            if (cuentas[numeroCuenta] && cuentas[numeroCuenta].pin === pinCuenta) {  
-                const nombre = cuentas[numeroCuenta].nombre;  
-                const saldo = cuentas[numeroCuenta].saldo.toFixed(2);  
-                mensajeSaldo.innerHTML = `Estimado usuario: ${nombre}, el saldo actual de su cuenta CTAX es de ${saldo} colones.`;  
-            } else {  
-                mensajeSaldo.innerHTML = 'Número de cuenta o PIN incorrectos. Intente de nuevo.';  
-            }  
-        }  
 
-        // Evento de consulta al hacer clic en el botón  
-        document.getElementById('btnConsultar').addEventListener('click', consultarSaldo);  
-    </script>  
 </body>  
 </html>
