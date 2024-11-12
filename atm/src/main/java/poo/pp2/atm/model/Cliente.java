@@ -29,7 +29,7 @@ public class Cliente {
     private LocalDate fechaNacimiento;
 
     private  HashMap<String, Cuenta> cuentasCliente; // Almacena las cuentas del cliente
-    private static final HashMap<String, Cliente> mapaClientes = new HashMap<>(); // Mapa de todos los clientes
+    protected static final HashMap<String, Cliente> mapaClientes = new HashMap<>(); // Mapa de todos los clientes
 
     //metodo para obtener todos los clientes
     public static HashMap<String, Cliente> obtenerClientes() {

@@ -4,6 +4,8 @@
  */
 package poo.pp2.atm.model;
 
+import poo.pp2.atm.integracion.BCCRWebScraping;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class Cuenta {
     private double saldo;
     private boolean activa;
     private String pin;
+    private static ArrayList<Cuenta> cuentas = new ArrayList<>();
     protected ArrayList<Transaccion> transacciones;
 
     public Cuenta(String numeroCuenta, double saldoInicial, String pin) {
@@ -28,8 +31,30 @@ public class Cuenta {
     // Método estático para crear una nueva cuenta
     public static Cuenta crearCuenta(String numeroCuenta, double saldoInicial, String pin) {
         System.out.println("Creando una nueva cuenta con número: " + numeroCuenta + " y saldo inicial: " + saldoInicial);
-        return new Cuenta(numeroCuenta, saldoInicial, pin);
+        Cuenta cuenta = new Cuenta(numeroCuenta, saldoInicial, pin);
+        cuentas.add(cuenta);
+        return cuenta;
     }
+
+    public static Cuenta consultarCuenta(String numeroCuenta) {
+        for (Cuenta cuenta : cuentas) {
+            if (cuenta.getNumeroCuenta().equals(numeroCuenta)) {
+                return cuenta;
+            }
+        }
+        return null;
+    }
+
+    public  double saldoEnDolares() {
+        String tipoCambioString = BCCRWebScraping.obtenerTipoCambioCompra();
+        tipoCambioString = tipoCambioString.replace(",", ".");
+        Double tipoCambio = Double.parseDouble(tipoCambioString);
+        double saldoDolares = saldo/tipoCambio;
+        System.out.println("DOLARUCOS"+ saldoDolares);
+        return saldoDolares;
+    }
+
+
 
     // consultarEstatus(): Retorna el estatus de la cuenta (activa o inactiva).
     public boolean consultarEstatus() {
@@ -157,7 +182,55 @@ public class Cuenta {
     public void bloquearCuenta() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
+    public static int getCantCuentas() {
+        return cantCuentas;
+    }
+
+    public static void setCantCuentas(int cantCuentas) {
+        Cuenta.cantCuentas = cantCuentas;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public ArrayList<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(ArrayList<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
+
+    public ArrayList<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(ArrayList<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
     public static String generarNumeroCuenta() {
         return "CTA" + (cantCuentas++);
     }
