@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import poo.pp2.atm.dto.ConsultaCuentaDto;
-import poo.pp2.atm.dto.CuentaDto;
+import poo.pp2.atm.dto.*;
 import poo.pp2.atm.model.Cuenta;
 
 
@@ -78,22 +77,114 @@ public class CuentaController {
 
         return "consultarSaldoActUSD";
     }
+    @GetMapping("/consultarEstadoC")
+    public String consultarEstadoC(Model model) {
+        ConsultaEstadoDto consultaEstadoDto = new ConsultaEstadoDto();
+        model.addAttribute("cuenta", consultaEstadoDto);
+        return "consultarEstadoCuenta";
+    }
 
+    @PostMapping("/consultarEstadoC")
+    public String consultarEstadoC(@ModelAttribute("cuenta") ConsultaEstadoDto consultaEstadoDto, Model model){
+        Cuenta cuenta = Cuenta.consultarCuenta(consultaEstadoDto.getNumeroCuenta());
+        boolean estado = cuenta.consultarEstatus();
+        String activo;
+        if (estado){
+            activo = "Activa";
+        }else{
+            activo = "Inactiva";
+        }
+        System.out.println(activo);
+        model.addAttribute("estado", activo);
+
+
+        return "consultarEstadoCuenta";
+    }
 
     @GetMapping("/cambiarPin")
-    public String cambiarPin() {
+    public String cambiarPin(Model model) {
+        CambioPinDto cambioPinDto = new CambioPinDto();
+        model.addAttribute("cuenta", cambioPinDto);
         return "/changePinForm";
     }
+    @PostMapping("/cambiarPin")
+    public String cambiarPin(@ModelAttribute("cuenta") CambioPinDto cambioPinDto) {
+        Cuenta cuenta = Cuenta.consultarCuenta(cambioPinDto.getNumeroCuenta());
+
+        cuenta.cambiarPin(cambioPinDto.getPinNuevo());
+        System.out.println("PIN NUEVO+"+ cuenta.getPin());
+        return "/changePinForm";
+    }
+    @GetMapping("/depositoCRC")
+    public String depositoCRC(Model model) {
+        DepositoDto depositoDto = new DepositoDto();
+        model.addAttribute("cuenta", depositoDto);
+        return "realizarDepositoCRC";
+    }
+    @PostMapping("/depositoCRC")
+    public String depositoCRC(@ModelAttribute("cuenta") DepositoDto depositoDto) {
+        Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
+        cuenta.realizarDepositoColones(Double.parseDouble(depositoDto.getMontoDeposito()));
+        System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
+        return "/menu";
+
+
+    }
+    @GetMapping("/depositoUSD")
+    public String depositoUSD(Model model) {
+        DepositoDto depositoDto = new DepositoDto();
+        model.addAttribute("cuenta", depositoDto);
+        return "realizarDepositoUSD";
+    }
+    @PostMapping("/depositoUSD")
+    public String depositoUSD(@ModelAttribute("cuenta") DepositoDto depositoDto) {
+        Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
+        cuenta.realizarDepositoDolares(Double.parseDouble(depositoDto.getMontoDeposito()));
+        System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
+        return "/menu";
+
+
+    }
+
+    @GetMapping("/retiroCRC")
+    public String retiroCRC(Model model) {
+        DepositoDto depositoDto = new DepositoDto();
+        model.addAttribute("cuenta", depositoDto);
+
+        return "realizarRetiroCRC";
+    }
+
+    @PostMapping("/retiroCRC")
+    public String retiroCRC(@ModelAttribute("cuenta") DepositoDto depositoDto) {
+        Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
+        cuenta.realizarRetiroColones(Double.parseDouble(depositoDto.getMontoDeposito()));
+        System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
+        return "/menu";
+    }
+    @GetMapping("/retiroUSD")
+    public String retiroUSD(Model model) {
+        DepositoDto depositoDto = new DepositoDto();
+        model.addAttribute("cuenta", depositoDto);
+        return "realizarRetiroUSD";
+    }
+    @PostMapping("/retiroUSD")
+    public String retiroUSD(@ModelAttribute("cuenta") DepositoDto depositoDto) {
+        Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
+        cuenta.realizarRetiroDolares(Double.parseDouble(depositoDto.getMontoDeposito()));
+        System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
+        return "/menu";
+    }
+
+
+
+
 
     @GetMapping("/consultarNumeroCuenta")
     public String consultarNumeroCuenta() {
         return "cNumeroCuenta";
     }
 
-    @GetMapping("/consultarEstadoC")
-    public String consultarEstadoC() {
-        return "consultarEstadoC";
-    }
+
     @GetMapping("/consultarEstadoCUSD")
     public String consultarEstadoCUSD() {
         return "consultarEstadoCUSD";
@@ -101,26 +192,14 @@ public class CuentaController {
 
 
 
-    @GetMapping("/depositoUSD")
-    public String depositoUSD() {
-        return "realizarDepositoUSD";
-    }
-    @GetMapping("/depositoCRC")
-    public String depositoCRC() {
-        return "realizarDepositoCRC";
-    }
 
 
 
-    @GetMapping("/retiroCRC")
-    public String retiroCRC() {
-        return "realizarRetiroCRC";
-    }
 
-    @GetMapping("/retiroUSD")
-    public String retiroUSD() {
-        return "realizarRetiroUSD";
-    }
+
+
+
+
 
     @GetMapping("/realizarTransferencia")
     public String transferencia() {

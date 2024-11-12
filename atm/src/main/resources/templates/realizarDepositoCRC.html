@@ -62,32 +62,23 @@
 </head>  
 <body>  
     <div class="form-container">  
-        <h2>Depósito de Cuenta</h2>  
-        <label for="nroCuenta">Número de cuenta:</label>  
-        <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required>  
-        
-        <label for="montoDeposito">Monto del depósito:</label>  
-        <input type="number" id="montoDeposito" placeholder="Ingrese monto de depósito" required>  
-        
-        <button id="btnDepositar">Realizar Depósito</button>  
-        <div id="resultado" class="message"></div>  
+        <h2>Depósito de Cuenta</h2>
+        <form method = "post" th:action="@{/cuenta/depositoCRC}" th:object="${cuenta}">
+            <label for="nroCuenta">Número de cuenta:</label>
+            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta"  required th:field="*{numeroCuenta}">
+
+            <label for="montoDeposito">Monto del depósito:</label>
+            <input type="number" id="montoDeposito" placeholder="Ingrese monto de depósito" required th:field="*{montoDeposito}">
+
+            <button id="btnDepositar">Realizar Depósito</button>
+
+
+        </form>
+
+        <div id="resultado" class="message"></div>
+
     </div>  
     
-    <script>  
-        // Datos ficticios para el mensaje  
-        const nombreCompleto = "...";   
-        const comision = 500.00; 
 
-        document.getElementById('btnDepositar').addEventListener('click', function() {  
-            const nroCuenta = document.getElementById('nroCuenta').value;  
-            const montoDeposito = parseFloat(document.getElementById('montoDeposito').value);  
-            const montoRealDeposito = montoDeposito - comision; // Monto real después de la comisión  
-            
-            const mensaje = `Estimado usuario: ${nombreCompleto}, se han depositado correctamente ${montoDeposito.toFixed(2)} colones.\n` +  
-                            `[El monto real depositado a su cuenta ${nroCuenta} es de ${montoRealDeposito.toFixed(2)} colones]\n` +  
-                            `[El monto cobrado por concepto de comisión fue de ${comision.toFixed(2)} colones, que fueron rebajados automáticamente de su saldo actual]`;  
-            document.getElementById('resultado').textContent = mensaje;  
-        });  
-    </script>  
 </body>  
 </html>

@@ -10,9 +10,11 @@ import lombok.Setter;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -25,16 +27,14 @@ public class Cliente {
     String numeroTelefono;
     String correoElectronico;
     String categoria;
+    String razonSocial;
     private int maximoCuentas;
     private LocalDate fechaNacimiento;
 
     private  HashMap<String, Cuenta> cuentasCliente; // Almacena las cuentas del cliente
     protected static final HashMap<String, Cliente> mapaClientes = new HashMap<>(); // Mapa de todos los clientes
 
-    //metodo para obtener todos los clientes
-    public static HashMap<String, Cliente> obtenerClientes() {
-        return mapaClientes; // Retorna el mapa de clientes
-    }
+
 
     // Constructor
     public Cliente(String nombreCompleto, String identificacion, String numeroTelefono, String correoElectronico, String categoria, int maximoCuentas, LocalDate fechaNacimiento) {
@@ -56,8 +56,16 @@ public class Cliente {
         System.out.println(maximoCuentas);
         System.out.println(fechaNacimiento);
 
+    }
 
-
+    public Cliente(String nombreCompleto, String identificacion, String numeroTelefono, String correoElectronico, String categoria, String razonSocial){
+        this.nombreCompleto = nombreCompleto;
+        this.identificacion = identificacion;
+        this.numeroTelefono = numeroTelefono;
+        this.correoElectronico = correoElectronico;
+        this.categoria = categoria;
+        this.razonSocial = razonSocial;
+        this.cuentasCliente = new HashMap<>(); // Inicializa el mapa de cuentas del cliente
 
     }
 
@@ -74,6 +82,11 @@ public class Cliente {
 
     }
 
+    // Método para obtener todos los clientes en una lista
+    public static List<Cliente> obtenerClientes() {
+        return new ArrayList<>(mapaClientes.values()); // Convierte los valores del mapa en una lista y la retorna
+    }
+
 
     // Método para agregar un nuevo cliente al mapa global
     public static String agregarCliente(String nombreCompleto, String identificacion, String numeroTelefono, String correoElectronico, String categoria, int maximoCuentas, LocalDate fechaNacimiento) {
@@ -85,9 +98,20 @@ public class Cliente {
         System.out.println("HOOLLAA");
         return "Cliente " + nombreCompleto + " agregado con éxito.";
     }
+    // Método para agregar un nuevo cliente al mapa global
+    public static String agregarCliente(String nombreCompleto, String identificacion, String numeroTelefono, String correoElectronico, String categoria, String razonSocial) {
+        if (mapaClientes.containsKey(identificacion)) {
+            return "Error: El cliente con la identificación " + identificacion + " ya existe.";
+        }
+        Cliente nuevoCliente = new Cliente(nombreCompleto, identificacion, numeroTelefono, correoElectronico, categoria, razonSocial);
+        mapaClientes.put(identificacion, nuevoCliente);
+        System.out.println("HOOLLAA");
+        return "Cliente " + nombreCompleto + " agregado con éxito.";
+    }
 
     // Método para buscar un cliente por identificación en el mapa global
     public static Cliente buscarClientePorIdentificacion(String identificacion) {
+        System.out.println(mapaClientes.get(identificacion));
         return mapaClientes.get(identificacion); // Retorna el cliente si existe, o null si no
     }
 
@@ -174,11 +198,11 @@ public class Cliente {
     }
 
     public void setCorreoElectronico(String nuevoCorreoElectronico) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.correoElectronico = nuevoCorreoElectronico;
     }
 
     public void setNumeroTelefono(String nuevoNumeroTelefono) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        numeroTelefono = nuevoNumeroTelefono;
     }
 
 

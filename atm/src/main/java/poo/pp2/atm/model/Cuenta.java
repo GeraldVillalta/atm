@@ -91,8 +91,11 @@ public class Cuenta {
     }
 
     // realizarDepositoDolares(double montoUSD, double tipoCambioCompra): Realiza un depósito en dólares.
-    public void realizarDepositoDolares(double montoUSD, double tipoCambioCompra) {
-        double montoColones = montoUSD * tipoCambioCompra;
+    public void realizarDepositoDolares(double montoUSD) {
+        String tipoCambioString = BCCRWebScraping.obtenerTipoCambioVenta();
+        tipoCambioString = tipoCambioString.replace(",", ".");
+        Double tipoCambio = Double.parseDouble(tipoCambioString);
+        double montoColones = montoUSD * tipoCambio;
         saldo += montoColones;
         transacciones.add(new Transaccion("Depósito Dólares", montoColones, false));
     }
@@ -106,8 +109,12 @@ public class Cuenta {
     }
 
     // realizarRetiroDolares(double montoUSD, double tipoCambioVenta): Realiza un retiro en dólares.
-    public void realizarRetiroDolares(double montoUSD, double tipoCambioVenta) {
-        double montoColones = montoUSD * tipoCambioVenta;
+    public void realizarRetiroDolares(double montoUSD) {
+        String tipoCambioString = BCCRWebScraping.obtenerTipoCambioVenta();
+        tipoCambioString = tipoCambioString.replace(",", ".");
+        Double tipoCambio = Double.parseDouble(tipoCambioString);
+
+        double montoColones = montoUSD * tipoCambio;
         if (saldo >= montoColones) {
             saldo -= montoColones;
             transacciones.add(new Transaccion("Retiro Dólares", montoColones, false));
