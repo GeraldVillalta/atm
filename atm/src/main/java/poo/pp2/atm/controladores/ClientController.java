@@ -1,16 +1,11 @@
 package poo.pp2.atm.controladores;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import poo.pp2.atm.dto.ClienteDto;
 import poo.pp2.atm.model.Cliente;
-
-import java.util.Date;
 
 @Controller
 @RequestMapping("/client")
@@ -59,4 +54,8 @@ public class ClientController {
     }
 
 
+    @GetMapping("/clientesRegistrados")
+    public String clientesRegistrados() {
+        return "clientesRegistrados";
+    }
 }
