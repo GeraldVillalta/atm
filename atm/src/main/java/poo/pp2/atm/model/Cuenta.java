@@ -9,6 +9,7 @@ import poo.pp2.atm.integracion.BCCRWebScraping;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cuenta {
 
@@ -20,20 +21,29 @@ public class Cuenta {
     private static ArrayList<Cuenta> cuentas = new ArrayList<>();
     protected ArrayList<Transaccion> transacciones;
 
-    public Cuenta(String numeroCuenta, double saldoInicial, String pin) {
+
+
+    private Cliente cliente;
+
+    public Cuenta(String numeroCuenta, double saldoInicial, String pin, Cliente cliente) {
         this.saldo = saldoInicial;
         this.activa = true;
         this.pin = encriptarPin(pin);
         this.transacciones = new ArrayList<>();
         this.numeroCuenta = numeroCuenta;
+        this.cliente = cliente;
     }
 
     // Método estático para crear una nueva cuenta
-    public static Cuenta crearCuenta(String numeroCuenta, double saldoInicial, String pin) {
+    public static Cuenta crearCuenta(String numeroCuenta, double saldoInicial, String pin, Cliente cliente) {
         System.out.println("Creando una nueva cuenta con número: " + numeroCuenta + " y saldo inicial: " + saldoInicial);
-        Cuenta cuenta = new Cuenta(numeroCuenta, saldoInicial, pin);
+        Cuenta cuenta = new Cuenta(numeroCuenta, saldoInicial, pin, cliente);
         cuentas.add(cuenta);
         return cuenta;
+    }
+
+    public static ArrayList<Cuenta> obtenerCuentas(){
+        return cuentas;
     }
 
     public static Cuenta consultarCuenta(String numeroCuenta) {
@@ -187,7 +197,7 @@ public class Cuenta {
     }
 
     public void bloquearCuenta() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        activa = false;
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
@@ -240,5 +250,13 @@ public class Cuenta {
 
     public static String generarNumeroCuenta() {
         return "CTA" + (cantCuentas++);
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }
