@@ -62,40 +62,26 @@
 </head>  
 <body>  
     <div class="form-container">  
-        <h2>Transferencia de Fondos</h2>  
-        <!-- Primer paso: info de cuenta -->  
-        <div id="step1">  
+        <h2>Transferencia de Fondos</h2>
+        <form method = "post" th:action="@{/cuenta/realizarTransferencia}" th:object="${cuenta}">
             <label for="nroCuenta">Número de cuenta origen:</label>  
-            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required>  
+            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required th:field="*{numeroCuenta}">
             
             <label for="pinActual">PIN actual:</label>  
-            <input type="password" id="pinActual" placeholder="Ingrese PIN" required>  
-            
-            <button id="btnAceptar">Aceptar</button>  
-            <div id="resultado" class="message"></div>  
-        </div>  
+            <input type="password" id="pinActual" placeholder="Ingrese PIN" required th:field="*{pin}">
 
-        <!-- Segundo paso: entrada de palabra -->  
-        <div id="step2" style="display:none;">  
-            <div id="mensajePalabra" class="message"></div>  
-            <label for="palabraRecibida">Ingrese la palabra recibida por mensaje de texto:</label>  
-            <input type="text" id="palabraRecibida" placeholder="Ingrese la palabra" required>  
-            
-            <button id="btnConfirmarPalabra">Aceptar</button>  
-            <div id="resultadoPalabra" class="message"></div>  
-        </div>  
+            <label for="nroCuentaDestino">Número de cuenta destino:</label>
+            <input type="text" id="nroCuentaDestino" placeholder="Ingrese número de cuenta destino" required th:field="*{numeroCuentaDestinatario}">
 
-        <!-- Tercer paso: ingreso del monto de transferencia y cuenta destino -->  
-        <div id="step3" style="display:none;">  
-            <label for="montoTransferencia">Monto de transferencia en colones:</label>  
-            <input type="number" id="montoTransferencia" placeholder="Ingrese monto de transferencia" required>  
-            
-            <label for="nroCuentaDestino">Número de cuenta destino:</label>  
-            <input type="text" id="nroCuentaDestino" placeholder="Ingrese número de cuenta destino" required>  
-            
-            <button id="btnTransferir">Transferir</button>  
-            <div id="resultadoTransferencia" class="message"></div>  
-        </div>  
+
+            <label for="montoTransferencia">Monto de transferencia en colones:</label>
+            <input type="number" id="montoTransferencia" placeholder="Ingrese monto de transferencia" required th:field="*{montoDeposito}">
+
+
+            <button id="btnTransferir">Transferir</button>
+        </form>
+        <span th:if="${mensajeConfirmacion}" th:text="${mensajeConfirmacion}" style="white-space: pre-wrap; color: green;"></span>
+
 
         <!-- Mensaje final -->  
         <div id="mensajeFinal" style="display:none;">  
@@ -103,42 +89,5 @@
         </div>  
     </div>  
 
-    <script>  
-        const nombreCompleto = "...";  
-        const comision = 500.00; 
-
-        document.getElementById('btnAceptar').addEventListener('click', function() {  
-            const nroCuenta = document.getElementById('nroCuenta').value;  
-            const pinActual = document.getElementById('pinActual').value;  
-
- 
-            document.getElementById('step1').style.display = 'none';  
-            document.getElementById('step2').style.display = 'block';  
-
-            const mensajePalabra = `Estimado usuario ${nombreCompleto}, se ha enviado una palabra por mensaje de texto, por favor revise sus mensajes y proceda a digitar la palabra enviada.`;  
-            document.getElementById('mensajePalabra').textContent = mensajePalabra;  
-        });  
-
-        document.getElementById('btnConfirmarPalabra').addEventListener('click', function() {  
-            const palabraRecibida = document.getElementById('palabraRecibida').value;  
-
-   
-            document.getElementById('step2').style.display = 'none';  
-            document.getElementById('step3').style.display = 'block';  
-            document.getElementById('resultadoPalabra').textContent = `Palabra ingresada: ${palabraRecibida}. Puede continuar.`;  
-        });  
-
-        document.getElementById('btnTransferir').addEventListener('click', function() {  
-            const montoTransferencia = parseFloat(document.getElementById('montoTransferencia').value);  
-            const nroCuentaDestino = document.getElementById('nroCuentaDestino').value;  
-
-        
-            document.getElementById('step3').style.display = 'none';  
-            document.getElementById('mensajeFinal').style.display = 'block';  
-
-            const mensajeFinal = `Estimado usuario: ${nombreCompleto}, la transferencia de fondos se ejecutó satisfactoriamente.\nEl monto retirado de la cuenta origen CTAX y depositado en la cuenta destino CTAX es de ${montoTransferencia.toFixed(2)} colones.\nEl monto cobrado por concepto de comisión a la cuenta origen fue de ${comision.toFixed(2)} colones, que fueron rebajados automáticamente de su saldo actual.`;  
-            document.getElementById('resultadoFinal').textContent = mensajeFinal;  
-        });  
-    </script>  
 </body>  
 </html>

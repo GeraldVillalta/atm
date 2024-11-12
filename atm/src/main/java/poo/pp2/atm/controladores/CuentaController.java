@@ -202,9 +202,33 @@ public class CuentaController {
 
 
     @GetMapping("/realizarTransferencia")
-    public String transferencia() {
+    public String transferencia(Model model) {
+        TransferenciaDto transferenciaDto = new TransferenciaDto();
+        model.addAttribute("cuenta", transferenciaDto);
         return "realizarTransferencia";
     }
+    @PostMapping("/realizarTransferencia")
+    public String transferencia(@ModelAttribute("cuenta") TransferenciaDto transferenciaDto, Model model) {
+        Cuenta cuentaOrigen = Cuenta.consultarCuenta(transferenciaDto.getNumeroCuenta());
+        Cuenta cuentaDestinatario = Cuenta.consultarCuenta(transferenciaDto.getNumeroCuentaDestinatario());
+
+        cuentaOrigen.transferirFondos(cuentaDestinatario,Double.parseDouble(transferenciaDto.getMontoDeposito()));
+        System.out.println("SALDO NUEVO ORIGEN:" + cuentaOrigen.getSaldo());
+        System.out.println("SALDO NUEVO DESTINATARIO:" + cuentaDestinatario.getSaldo());
+
+        // Formatea el mensaje de confirmación
+        String mensaje = String.format("La transferencia se realizó exitosamente.\n"
+                        + "Nuevo saldo de la cuenta origen: %.2f colones.\n"
+                        + "Nuevo saldo de la cuenta destinatario: %.2f colones.",
+                cuentaOrigen.getSaldo(),
+                cuentaDestinatario.getSaldo());
+
+        // Agrega el mensaje al modelo
+        model.addAttribute("mensajeConfirmacion", mensaje);
+
+        return "realizarTransferencia";
+    }
+
 
     @GetMapping("/consultarTransacciones")
     public String consultarTransacciones() {
