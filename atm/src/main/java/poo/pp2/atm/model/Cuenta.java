@@ -9,6 +9,7 @@ import poo.pp2.atm.integracion.BCCRWebScraping;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cuenta {
@@ -43,7 +44,11 @@ public class Cuenta {
     }
 
     public static ArrayList<Cuenta> obtenerCuentas(){
-        return cuentas;
+        ArrayList<Cuenta> cuentasOrdenadasSaldo = cuentas;
+        cuentasOrdenadasSaldo.sort(Comparator.comparingDouble(Cuenta::getSaldo));
+
+
+        return cuentasOrdenadasSaldo;
     }
 
     public static Cuenta consultarCuenta(String numeroCuenta) {

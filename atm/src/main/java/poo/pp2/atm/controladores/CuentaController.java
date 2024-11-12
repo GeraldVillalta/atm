@@ -232,6 +232,7 @@ public class CuentaController {
     @GetMapping("/cuentasRegistradas")
     public String cuentasRegistradas(Model model) {
         List cuentas = Cuenta.obtenerCuentas();
+
         model.addAttribute("cuentas", cuentas);
         return "cuentasRegistradas";
     }

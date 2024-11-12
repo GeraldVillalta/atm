@@ -33,6 +33,7 @@
     <th>Número de cuenta</th>
     <th>Estatus de la cuenta</th>
     <th>saldo</th>
+    <th>Nombre</th>
   </tr>
   </thead>
   <tbody>
@@ -40,6 +41,8 @@
     <td th:text="${cuenta.numeroCuenta}"></td>
     <td th:text="${cuenta.activa}"></td>
     <td th:text="${cuenta.saldo}"></td>
+    <td th:text="${cuenta.cliente.nombreCompleto}"></td>
+
   </tr>
   </tbody>
 </table>
