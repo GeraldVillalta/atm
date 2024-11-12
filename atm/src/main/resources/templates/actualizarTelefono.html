@@ -54,42 +54,16 @@
 </head>  
 <body>  
     <div class="container">  
-        <h2>Actualizar Número de Teléfono</h2>  
-        <input type="text" id="idCliente" placeholder="Identificación del Cliente" />  
-        <input type="text" id="nuevoTelefono" placeholder="Nuevo Número de Teléfono" />  
-        <button id="btnActualizar">Actualizar Teléfono</button>  
+        <h2>Actualizar Número de Teléfono</h2>
+        <form method="post" th:action="@{/client/actualizarTelefono}" th:object="${cliente}">
+            <input type="text" id="idCliente" placeholder="Identificación del Cliente"  th:field="*{identificacion}"/>
+            <input type="text" id="nuevoTelefono" placeholder="Nuevo Número de Teléfono"  th:field="*{telefono}"/>
+            <button id="btnActualizar">Actualizar Teléfono</button>
+        </form>
+
         <div class="mensaje" id="mensajeEstado"></div>  
     </div>  
 
-    <script>  
-        // Datos de ejemplo 
-        const clientes = {  
-            '001': { nombre: 'Juan Pérez', telefono: '123456789' },  
 
-        };  
-
-        // Función para actualizar el número de teléfono  
-        function actualizarTelefono() {  
-            const idCliente = document.getElementById('idCliente').value;  
-            const nuevoTelefono = document.getElementById('nuevoTelefono').value;  
-            const mensajeEstado = document.getElementById('mensajeEstado');  
-
-            if (clientes[idCliente]) {  
-                const cliente = clientes[idCliente];  
-                const telefonoAnterior = cliente.telefono;  
-                cliente.telefono = nuevoTelefono; // Actualiza el teléfono  
-
-                mensajeEstado.innerHTML = `  
-                    Estimado usuario: ${cliente.nombre}, usted ha cambiado el   
-                    número de teléfono ${telefonoAnterior} por el nuevo número ${nuevoTelefono}.  
-                `;  
-            } else {  
-                mensajeEstado.innerHTML = 'Identificación del cliente incorrecta. Intente de nuevo.';  
-            }  
-        }  
-
-        // Evento de actualización al hacer clic en el botón  
-        document.getElementById('btnActualizar').addEventListener('click', actualizarTelefono);  
-    </script>  
 </body>  
 </html>

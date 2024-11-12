@@ -54,41 +54,16 @@
 </head>  
 <body>  
     <div class="container">  
-        <h2>Actualizar Correo Electrónico</h2>  
-        <input type="text" id="idCliente" placeholder="Identificación del Cliente" />  
-        <input type="email" id="nuevoCorreo" placeholder="Nuevo Correo Electrónico" />  
-        <button id="btnActualizar">Actualizar Correo</button>  
+        <h2>Actualizar Correo Electrónico</h2>
+        <form method="post" th:action="@{/client/actualizarEmail}" th:object="${cliente}">
+            <input type="text" id="idCliente" placeholder="Identificación del Cliente" th:field="*{identificacion}" />
+            <input type="email" id="nuevoCorreo" placeholder="Nuevo Correo Electrónico" th:field="*{telefono}" />
+            <button id="btnActualizar">Actualizar Correo</button>
+        </form>
+
         <div class="mensaje" id="mensajeEstado"></div>  
     </div>  
 
-    <script>  
-        // Datos de ejemplo 
-        const clientes = {  
-            '001': { nombre: 'Juan Pérez', correo: 'juan.perez@example.com' },  
-        };  
 
-        // Función para actualizar el correo electrónico  
-        function actualizarCorreo() {  
-            const idCliente = document.getElementById('idCliente').value;  
-            const nuevoCorreo = document.getElementById('nuevoCorreo').value;  
-            const mensajeEstado = document.getElementById('mensajeEstado');  
-
-            if (clientes[idCliente]) {  
-                const cliente = clientes[idCliente];  
-                const correoAnterior = cliente.correo;  
-                cliente.correo = nuevoCorreo; // Actualiza el correo  
-
-                mensajeEstado.innerHTML = `  
-                    Estimado usuario: ${cliente.nombre}, usted ha cambiado el   
-                    correo electrónico ${correoAnterior} por el nuevo correo ${nuevoCorreo}.  
-                `;  
-            } else {  
-                mensajeEstado.innerHTML = 'Identificación del cliente incorrecta. Intente de nuevo.';  
-            }  
-        }  
-
-        // Evento de actualización al hacer clic en el botón  
-        document.getElementById('btnActualizar').addEventListener('click', actualizarCorreo);  
-    </script>  
 </body>  
 </html>

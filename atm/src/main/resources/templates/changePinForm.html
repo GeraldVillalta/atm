@@ -56,17 +56,22 @@
 </head>  
 <body>  
     <div class="form-container">  
-        <h2>Cambiar PIN</h2>  
-        <label for="nroCuenta">Nro Cuenta:</label>  
-        <input type="text" id="nroCuenta" placeholder="Ingresa tu número de cuenta" required>  
+        <h2>Cambiar PIN</h2>
+        <form method = "post" th:action="@{/cuenta/cambiarPin}" th:object="${cuenta}" >
+            <label for="nroCuenta">Nro Cuenta:</label>
+            <input type="text" id="nroCuenta" placeholder="Ingresa tu número de cuenta" required th:field="*{numeroCuenta}">
 
-        <label for="pinActual">PIN Actual:</label>  
-        <input type="password" id="pinActual" placeholder="Ingresa tu PIN actual" required>  
+            <label for="pinActual">PIN Actual:</label>
+            <input type="password" id="pinActual" placeholder="Ingresa tu PIN actual" required th:field="*{pin}">
 
-        <label for="pinNuevo">PIN Nuevo:</label>  
-        <input type="password" id="pinNuevo" placeholder="Ingresa tu nuevo PIN" required>  
+            <label for="pinNuevo">PIN Nuevo:</label>
+            <input type="password" id="pinNuevo" placeholder="Ingresa tu nuevo PIN" required th:field="*{pinNuevo}">
 
-        <button id="btnChangePin">Cambiar Pin</button>  
+            <button id="btnChangePin">Cambiar Pin</button>
+
+
+        </form>
+
     </div>  
 </body>  
 </html>

@@ -61,19 +61,18 @@
 </head>  
 <body>  
     <div class="form-container">  
-        <h2>Estado de Cuenta</h2>  
-        <label for="nroCuenta">Ingrese el número de cuenta:</label>  
-        <input type="text" id="nroCuenta" placeholder="ACC1" required>  
-        <button id="btnMostrarEstado">Mostrar Estado</button>  
-        <div id="estadoCuenta" class="message"></div>  
+        <h2>Estado de Cuenta</h2>
+        <form method="post" th:action="@{/cuenta/consultarEstadoC}" th:object="${cuenta}">
+            <label for="nroCuenta">Ingrese el número de cuenta:</label>
+            <input type="text" id="nroCuenta" placeholder="ACC1" required th:field="*{numeroCuenta}">
+
+            <button id="btnMostrarEstado">Mostrar Estado</button>
+        </form>
+        <span th:text="${estado}"></span>
+
+
     </div>  
     
-    <script>  
-        document.getElementById('btnMostrarEstado').addEventListener('click', function() {  
-            const nroCuenta = document.getElementById('nroCuenta').value;  
-            const mensaje = `La cuenta ${nroCuenta}, a nombre de ... tiene estado de ...`;  
-            document.getElementById('estadoCuenta').textContent = mensaje;  
-        });  
-    </script>  
+
 </body>  
 </html>

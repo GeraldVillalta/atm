@@ -62,79 +62,27 @@
 </head>  
 <body>  
     <div class="form-container">  
-        <h2>Retiro de Dinero en Dólares</h2>  
-        <!-- Primer paso: info de cuenta -->  
-        <div id="step1">  
-            <label for="nroCuenta">Número de cuenta:</label>  
-            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required>  
-            
-            <label for="pinActual">PIN actual:</label>  
-            <input type="password" id="pinActual" placeholder="Ingrese PIN" required>  
-            
-            <button id="btnAceptar">Aceptar</button>  
-            <div id="resultado" class="message"></div>  
-        </div>  
+        <h2>Retiro de Dinero en Dólares</h2>
+        <form method = "post" th:action="@{/cuenta/retiroUSD}" th:object="${cuenta}">
+            <label for="nroCuenta">Número de cuenta:</label>
+            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required th:field="*{numeroCuenta}">
 
-        <!-- Segundo paso: entrada de palabra -->  
-        <div id="step2" style="display:none;">  
-            <label for="palabraRecibida">Ingrese la palabra recibida por mensaje de texto:</label>  
-            <input type="text" id="palabraRecibida" placeholder="Ingrese la palabra" required>  
-            
-            <button id="btnConfirmarPalabra">Aceptar</button>  
-            <div id="resultadoPalabra" class="message"></div>  
-        </div>  
+            <label for="montoRetiro">Monto de retiro en dólares:</label>
+            <input type="number" id="montoRetiro" placeholder="Ingrese monto de retiro" required th:field="*{montoDeposito}">
 
-        <!-- Tercer paso: ingreso del monto de retiro -->  
-        <div id="step3" style="display:none;">  
-            <label for="montoRetiro">Monto de retiro en dólares:</label>  
-            <input type="number" id="montoRetiro" placeholder="Ingrese monto de retiro" required>  
-            
-            <button id="btnRetirar">Retirar</button>  
-            <div id="resultadoRetiro" class="message"></div>  
-        </div>  
-
-        <!-- Mensaje final -->  
-        <div id="mensajeFinal" style="display:none;">  
-            <div class="message" id="resultadoFinal"></div>  
-        </div>  
-    </div>  
-
-    <script>  
-        const nombreCompleto = "...";  
-        const comision = 1000.00; 
-        const tipoCambio = 600.00;   
-
-        document.getElementById('btnAceptar').addEventListener('click', function() {  
-            const nroCuenta = document.getElementById('nroCuenta').value;  
-            const pinActual = document.getElementById('pinActual').value;  
+            <button id="btnRetirar">Retirar</button>
+            <div id="resultadoRetiro" class="message"></div>
+        </form>
 
 
-            document.getElementById('step1').style.display = 'none';  
-            document.getElementById('step2').style.display = 'block';  
-            document.getElementById('resultado').textContent = `Número de cuenta ${nroCuenta} validado.`;  
-        });  
 
-        document.getElementById('btnConfirmarPalabra').addEventListener('click', function() {  
-            const palabraRecibida = document.getElementById('palabraRecibida').value;  
 
-            // Aquí va la lógica para verificar la palabra.  
-            document.getElementById('step2').style.display = 'none';  
-            document.getElementById('step3').style.display = 'block';  
-            document.getElementById('resultadoPalabra').textContent = `Palabra ingresada: ${palabraRecibida}. Puede continuar.`;  
-        });  
 
-        document.getElementById('btnRetirar').addEventListener('click', function() {  
-            const montoRetiro = parseFloat(document.getElementById('montoRetiro').value);  
-            const montoEquivalente = montoRetiro * tipoCambio;  
 
-            // Aquí puedes agregar lógica para procesar el retiro.  
-            // Simplemente informamos al usuario que el retiro fue exitoso.  
-            document.getElementById('step3').style.display = 'none';  
-            document.getElementById('mensajeFinal').style.display = 'block';  
 
-            const mensajeFinal = `Estimado usuario: ${nombreCompleto}, el monto de este retiro de su cuenta CTAX es ${montoRetiro.toFixed(2)} dólares, por favor tome el dinero dispensado.\nSegún el BCCR, el tipo de cambio de venta del dólar de hoy es: ${tipoCambio.toFixed(2)} colones.\nEl monto equivalente de su retiro es ${montoEquivalente.toFixed(3)} colones.\nEl monto cobrado por concepto de comisión fue de ${comision.toFixed(2)} colones, que fueron rebajados automáticamente de su saldo actual.`;  
-            document.getElementById('resultadoFinal').textContent = mensajeFinal;  
-        });  
-    </script>  
+
+
+    </div>
+
 </body>  
 </html>
