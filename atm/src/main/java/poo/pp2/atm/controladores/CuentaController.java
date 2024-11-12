@@ -132,7 +132,10 @@ public class CuentaController {
         return "consultarTransacciones";
     }
 
-
+    @GetMapping("/cuentasRegistradas")
+    public String cuentasRegistradas() {
+        return "cuentasRegistradas";
+    }
 }
 
 
