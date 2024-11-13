@@ -61,70 +61,24 @@
     </style>  
 </head>  
 <body>  
-    <div class="form-container">  
-        <h2>Consultar Transacciones</h2>  
-        <!-- Primer paso: info de cuenta -->  
-        <div id="step1">  
+    <div class="form-container">
+        <h2>Consultar Transacciones</h2>
+
+        <form th:action="@{/cuenta/consultarTransacciones}" method="post" th:object="${cuenta}"> <!-- Acción de formulario POST -->
+
             <label for="nroCuenta">Número de cuenta:</label>  
-            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required>  
+            <input type="text" id="nroCuenta" placeholder="Ingrese número de cuenta" required th:field="*{numeroCuenta}" >
             
-            <label for="pinActual">PIN actual:</label>  
-            <input type="password" id="pinActual" placeholder="Ingrese PIN" required>  
-            
+            <label for="pinActual">PIN actual:</label>
+            <input type="password" id="pinActual" placeholder="Ingrese PIN" required th:field="*{pin}">
+
             <button id="btnAceptar">Aceptar</button>  
-            <div id="resultado" class="message"></div>  
-        </div>  
+
+        </form>
+        <div id="resultado" class="message"></div>
+    </div>
 
 
 
-        <!-- Tercer paso: mostrar transacciones -->  
-        <div id="step3" style="display:none;">  
-            <div class="message" id="resultadoTransacciones"></div>  
-        </div>  
-
-    </div>  
-
-    <script>  
-        // Datos ficticios de ejemplo de transacciones  
-        const transacciones = [  
-            { tipo: 'Depósito', monto: 1500, fecha: '2023-01-15', comision: 'No' },  
-            { tipo: 'Retiro', monto: 500, fecha: '2023-02-10', comision: 'Sí' },  
-            { tipo: 'Depósito', monto: 2000, fecha: '2023-03-05', comision: 'No' },  
-            { tipo: 'Retiro', monto: 300, fecha: '2023-04-01', comision: 'Sí' },  
-            { tipo: 'Retiro', monto: 1000, fecha: '2023-05-20', comision: 'No' },  
-        ];  
-
-        const nombreCompleto = "..."; 
-
-        document.getElementById('btnAceptar').addEventListener('click', function() {  
-            const nroCuenta = document.getElementById('nroCuenta').value;  
-            const pinActual = document.getElementById('pinActual').value;  
-
-            // Aquí va la lógica de verificación de cuenta y PIN  
-            document.getElementById('step1').style.display = 'none';  
-            document.getElementById('step2').style.display = 'block';  
-
-            const mensajePalabra = `Estimado usuario ${nombreCompleto}, se ha enviado una palabra por mensaje de texto, por favor revise sus mensajes y proceda a digitar la palabra enviada.`;  
-            document.getElementById('mensajePalabra').textContent = mensajePalabra;  
-        });  
-
-        document.getElementById('btnConfirmarPalabra').addEventListener('click', function() {  
-            const palabraRecibida = document.getElementById('palabraRecibida').value;  
-
- 
-            document.getElementById('step2').style.display = 'none';  
-            document.getElementById('step3').style.display = 'block';  
-            document.getElementById('resultadoPalabra').textContent = `Palabra ingresada: ${palabraRecibida}. Puede continuar.`;  
-
-            // Generar la lista de transacciones  
-            let detallesTransacciones = `Estimado usuario: ${nombreCompleto}, el detalle de todos los depósitos y retiros que se han realizado sobre su cuenta CTAX es:\n\n`;  
-            transacciones.forEach(transaccion => {  
-                detallesTransacciones += `Tipo de transacción: ${transaccion.tipo}\nMonto de la transacción: ${transaccion.monto}\nFecha: ${transaccion.fecha}\nCargo por comisión: ${transaccion.comision}\n\n`;  
-            });  
-
-            document.getElementById('resultadoTransacciones').textContent = detallesTransacciones;  
-        });  
-
-    </script>  
 </body>  
 </html>

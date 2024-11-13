@@ -255,6 +255,8 @@ public class CuentaController {
         TransferenciaDto transferenciaDto = new TransferenciaDto();
         model.addAttribute("cuenta", transferenciaDto);
         return "realizarTransferencia";
+
+
     }
     @PostMapping("/realizarTransferencia")
     public String transferencia(@ModelAttribute("cuenta") TransferenciaDto transferenciaDto, Model model) {
@@ -280,8 +282,21 @@ public class CuentaController {
 
 
     @GetMapping("/consultarTransacciones")
-    public String consultarTransacciones() {
+    public String consultarTransacciones(Model model) {
+        ConsultaCuentaDto consultaCuentaDto = new ConsultaCuentaDto();
+        model.addAttribute("cuenta", consultaCuentaDto);
         return "consultarTransacciones";
+    }
+
+    @PostMapping("/consultarTransacciones")
+    public String consultarTransacciones(@ModelAttribute("cuenta") ConsultaCuentaDto consultaCuentaDto, Model model){
+        Cuenta cuenta = Cuenta.consultarCuenta(consultaCuentaDto.getNumeroCuenta());
+        List transferencias = cuenta.getTransacciones();
+        model.addAttribute("cuentas", transferencias);
+
+
+
+        return "tablaConsultarT";
     }
 
 
