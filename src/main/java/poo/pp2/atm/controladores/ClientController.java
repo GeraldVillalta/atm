@@ -61,7 +61,7 @@ public class ClientController {
 
         cuenta.cambiarPin(cambioPinDto.getPinNuevo());
         System.out.println("PIN NUEVO+"+ cuenta.getPin());
-        return "/changePinForm";
+        return "changePinForm";
     }
 
     @GetMapping("/actualizarTelefono")

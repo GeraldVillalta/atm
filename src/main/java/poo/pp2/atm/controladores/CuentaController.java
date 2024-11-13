@@ -27,7 +27,7 @@ public class CuentaController {
     public String crearCuenta(Model model) {
         cuentaDto = new CuentaDto();
         model.addAttribute("cuenta", cuentaDto);
-        return "/crearCuenta";
+        return "crearCuenta";
     }
     @PostMapping("/crear")
     public String crearCuenta(@ModelAttribute("cuenta") CuentaDto cuentaDto) {
@@ -36,7 +36,7 @@ public class CuentaController {
         System.out.println(cuentaDto.getNumeroCuenta());
         cuenta = Cuenta.crearCuenta(cuentaDto.getNumeroCuenta(), cuentaDto.getSaldo(), cuentaDto.getPin(), cliente);
         System.out.println("ESTADO DE CUENTA"+cuenta.consultarEstadoCuenta());
-        return "/menu";
+        return "menu";
     }
     @GetMapping("/consultarSaldoActual")
     public String consultarSaldoActual(Model model) {
@@ -138,7 +138,7 @@ public class CuentaController {
     public String cambiarPin(Model model) {
         CambioPinDto cambioPinDto = new CambioPinDto();
         model.addAttribute("cuenta", cambioPinDto);
-        return "/changePinForm";
+        return "changePinForm";
     }
     @PostMapping("/cambiarPin")
     public String cambiarPin(@ModelAttribute("cuenta") CambioPinDto cambioPinDto) {
@@ -146,7 +146,7 @@ public class CuentaController {
 
         cuenta.cambiarPin(cambioPinDto.getPinNuevo());
         System.out.println("PIN NUEVO+"+ cuenta.getPin());
-        return "/changePinForm";
+        return "changePinForm";
     }
     @GetMapping("/depositoCRC")
     public String depositoCRC(Model model) {
@@ -159,7 +159,7 @@ public class CuentaController {
         Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
         cuenta.realizarDepositoColones(Double.parseDouble(depositoDto.getMontoDeposito()));
         System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
-        return "/menu";
+        return "menu";
 
 
     }
@@ -174,7 +174,7 @@ public class CuentaController {
         Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
         cuenta.realizarDepositoDolares(Double.parseDouble(depositoDto.getMontoDeposito()));
         System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
-        return "/menu";
+        return "menu";
 
 
     }
@@ -192,7 +192,7 @@ public class CuentaController {
         Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
         cuenta.realizarRetiroColones(Double.parseDouble(depositoDto.getMontoDeposito()));
         System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
-        return "/menu";
+        return "menu";
     }
     @GetMapping("/retiroUSD")
     public String retiroUSD(Model model) {
@@ -205,7 +205,7 @@ public class CuentaController {
         Cuenta cuenta = Cuenta.consultarCuenta(depositoDto.getNumeroCuenta());
         cuenta.realizarRetiroDolares(Double.parseDouble(depositoDto.getMontoDeposito()));
         System.out.println("SALDO NUEVO:" + cuenta.getSaldo());
-        return "/menu";
+        return "menu";
     }
 
 
@@ -236,16 +236,6 @@ public class CuentaController {
         model.addAttribute("cuentas", cuentas);
         return "cuentasRegistradas";
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -332,7 +322,7 @@ public class CuentaController {
         Cuenta cuenta = Cuenta.consultarCuenta(eliminarCuentaDto.getNumeroCuenta());
         cuenta.eliminarCuenta(cuenta);
         System.out.println("Se elimino correctamente!");
-        return "/menu";
+        return "menu";
     }
 }
 
