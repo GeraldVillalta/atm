@@ -304,6 +304,21 @@ public class CuentaController {
 
 
     }
+
+    @GetMapping("/DeleteAccountForm")
+    public String DeleteAccountForm(Model model) {
+        EliminarCuentaDto eliminarCuentaDto = new EliminarCuentaDto();
+        model.addAttribute("cuenta", eliminarCuentaDto);
+        return "DeleteAccountForm";
+    }
+
+    @PostMapping("/DeleteAccountForm")
+    public String DeleteAccountForm(@ModelAttribute("cuenta") EliminarCuentaDto eliminarCuentaDto) {
+        Cuenta cuenta = Cuenta.consultarCuenta(eliminarCuentaDto.getNumeroCuenta());
+        cuenta.eliminarCuenta(cuenta);
+        System.out.println("Se elimino correctamente!");
+        return "/menu";
+    }
 }
 
 

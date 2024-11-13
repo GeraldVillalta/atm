@@ -146,9 +146,14 @@ public class Cuenta {
     }
 
     // eliminarCuenta(): Elimina la cuenta, verificando el saldo.
-    public void eliminarCuenta() {
+   // Método para eliminar la cuenta del ArrayList y marcarla como inactiva
+    public void eliminarCuenta(Cuenta cuenta) {
         if (saldo == 0) {
-            activa = false;
+            activa = false; // Marca la cuenta como inactiva
+            cuentas.remove(cuenta); // Elimina la cuenta del ArrayList
+            System.out.println("Cuenta eliminada! " );
+        } else {
+            System.out.println("No se puede eliminar la cuenta " + cuenta.getNumeroCuenta() + " porque tiene saldo.");
         }
     }
 

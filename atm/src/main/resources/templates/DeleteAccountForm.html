@@ -58,15 +58,17 @@
     </style>  
 </head>  
 <body>  
-    <div class="form-container">  
-        <h2>Borrar Cuenta</h2>  
-        <label for="nroCuenta">Nro Cuenta:</label>  
-        <input type="text" id="nroCuenta" placeholder="Ingresa tu número de cuenta" required>  
+    <div class="form-container">
+        <h2>Eliminar Cuenta</h2>
+        <form method="post" th:action="@{/cuenta/DeleteAccountForm}" th:object="${cuenta}">
+            <label for="nroCuenta">Nro Cuenta:</label>
+            <input type="text" id="nroCuenta" placeholder="Ingresa tu número de cuenta" required th:field="*{numeroCuenta}">
 
-        <label for="pin">PIN:</label>  
-        <input type="password" id="pin" placeholder="Ingresa tu PIN" required>  
+            <label for="pin">PIN:</label>
+            <input type="password" id="pin" placeholder="Ingresa tu PIN" required th:field="*{pin}">
 
-        <button id="jToggleButton1">Borrar Cuenta</button>  
+            <button id="jToggleButton1">Borrar Cuenta</button>
+        </form>
     </div>  
 </body>  
 </html>
