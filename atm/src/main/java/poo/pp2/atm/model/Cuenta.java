@@ -169,7 +169,7 @@ public class Cuenta {
 
     // cambiarPin(String nuevoPin): Actualiza el PIN de la cuenta.
     public void cambiarPin(String nuevoPin) {
-        this.pin = nuevoPin;
+        this.pin = encriptarPin(nuevoPin);
     }
 
     // validarPin(String pinIngresado): Verifica que el PIN ingresado sea correcto.
